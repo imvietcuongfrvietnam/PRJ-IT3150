@@ -1,9 +1,28 @@
 <?php
-$path_project = 'PRJ-IT3150';
+// Bắt đầu session và các chức năng cần thiết
+session_start();
 
+// Kết nối cơ sở dữ liệu (sử dụng PDO hoặc MySQLi)
+$host = 'localhost';
+$dbname = 'qldaotao';
+$username = 'root';
+$password = '19012003Vietcuong@';
 
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', $_SERVER['DOCUMENT_ROOT']. DS .$path_project);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+}
 
-//echo 'Document Root: ' . $_SERVER['DOCUMENT_ROOT'];
-
+// Xử lý các logic và điều hướng trong ứng dụng (controller)
+if (isset($_GET['page'])) {
+    if ($_GET['page'] == 'about') {
+        include('views/about.php');
+    } else {
+        include('views/home.php');
+    }
+} else {
+    include('views/home.php');
+}
+?>
